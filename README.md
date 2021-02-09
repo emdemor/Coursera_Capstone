@@ -1,4 +1,4 @@
-<a><img src="https://ibm.box.com/shared/static/ugcqz6ohbvff804xp84y4kqnvvk3bq1g.png" width="200" align="center"></a>
+<!-- <a><img src="https://ibm.box.com/shared/static/ugcqz6ohbvff804xp84y4kqnvvk3bq1g.png" width="200" align="center"></a> -->
 
 <center>
     <h1>Applied Data Science Capstone</h1>
