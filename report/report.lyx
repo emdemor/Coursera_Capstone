@@ -1,0 +1,1431 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{hyperref}
+\usepackage{mathpazo}
+\usepackage{xcolor}
+
+
+% Cor de ênfase
+\definecolor{Enfase1}{rgb}{.204,.353,.541}
+\definecolor{Enfase2}{rgb}{.104,.303,.501}
+
+\hypersetup{
+	colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=Enfase2,          	% color of internal links
+    	citecolor=Enfase1,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+	urlcolor=Enfase1,
+	bookmarksdepth=4
+}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Applied Data Science Capstone: Most Similar Neighborhood in Another City
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Subsection
+Background
+\end_layout
+
+\begin_layout Standard
+São Paulo and Rio de Janeiro are the two largest cities in Brazil.
+ Although relatively close (given the continental dimensions of the country),
+ they have very different characteristics.
+ One of the factors that contribute to the existence of these discrepancies
+ is the obvious geographical distinctions that naturally shape social behavior
+ and, indirectly, the urban structural configuration.
+ The beaches of Rio de Janeiro, for example, give residents a natural option
+ of entertainment and the nearest commercial places have characteristics
+ aimed at this purpose.
+ On the other hand, in São Paulo, entertainment options are directly dependent
+ on experiences that can be provided as a business model.
+\end_layout
+
+\begin_layout Standard
+From a social point of view, Rio de Janeiro inherits aristocratic characteristic
+s, for having long been the capital of the empire of Brazil.
+ In contrast, the history behind São Paulo's growth is much more associated
+ with commercial reasons.
+ For this reason, the lifestyle in São Paulo tends to be much more pragmatic
+ than in Rio de Janeiro.
+ This characteristic also influences the business model, as there are many
+ more establishments in São Paulo that provide what people do not have time
+ to do.
+\end_layout
+
+\begin_layout Subsection
+Problem
+\end_layout
+
+\begin_layout Standard
+We have two of the largest cities in the world with very distinct characteristic
+s: São Paulo and Rio de Janeiro.
+ Locally, each of this places acts like professional centers attracting
+ professionals and companies.
+ Despite the differences mentioned, it is expected that several specific
+ neighborhoods of these cities have characteristics in common.
+ One way to look for this similarity would be to consider the types of venues
+ in each neighborhood.
+ In this way, it would be possible to detect whether a neighborhood has
+ characteristics more focused on commerce, leisure, sports, culture or housing.
+ So, what we need here is a procedure capable of relating neighborhoods,
+ not only from the same city, but also from different cities.
+\end_layout
+
+\begin_layout Subsection
+Interest
+\end_layout
+
+\begin_layout Standard
+It is very common for people to have to move to another city.
+ The reasons for this are quite diverse and can involve professional opportuniti
+es, personal reasons, among others.
+ This process can be quite difficult for some people, as it involves adapting
+ to a new and possibly different environment.
+ Although two cities may be completely different, they may have neighborhoods
+ with similar characteristics in common.
+ Knowledge of this information can be crucial when choosing a new place
+ to live in a new city.
+ Thus, a person can choose to move to a neighborhood in a new city with
+ similar characteristics to the neighborhood in the city where he lives
+ and is already acclimated.
+\end_layout
+
+\begin_layout Standard
+Sometimes, a company in one of this cities is interesting in a professional
+ that lives in the other city.
+ Certainly, if the professional find a similar neighborhood, he will be
+ more likely to accept an offer if it is professionally interesting.
+\end_layout
+
+\begin_layout Section
+Data
+\end_layout
+
+\begin_layout Standard
+The name of all neighbourhoods of São Paulo and Rio de Janeiro are needed
+ to solve the problem.
+ The data given at the site 
+\family typewriter
+www.guiamais.com.br
+\family default
+ is used in order to fetch the necessary data.
+ The respective URLs are:
+\end_layout
+
+\begin_layout Itemize
+(São Paulo): 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.guiamais.com.br/bairros/sao-paulo-sp}{https://www.guiamais.com.br/bai
+rros/sao-paulo-sp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(Rio de Janeiro): 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{https://www.guiamais.com.br/bairros/rio-de-janeiro-rj}{https://www.guiamais.com.b
+r/bairros/rio-de-janeiro-rj}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see an example of data scraped from the pages in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:01_map"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename nb_example.png
+	width 40text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of neighbourhoods in São Paulo and Rio de Janeiro.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:01_map"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As next step, we need to get the latitude and longitude of all neighbourhoods.
+ It can be done using the Nominatim search API, from OpenStreetMaps [???].
+ An example of data with coordinates can be see on Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:02"
+
+\end_inset
+
+.
+ Its possible to see the neighbourhood positions in the maps pof Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:03"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename coor_example.png
+	width 75text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of neighbourhoods in São Paulo and Rio de Janeiro with latitude
+ and longitude imported from Nominatim.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:02"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename sp-rj-map.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of venues on neighbourhood with index 
+\family typewriter
+nb_index
+\family default
+ = 0.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:03"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coordinate data are then used for the foursquare API in order to get
+ the venue data of all neighborhoods.
+ For this, I used the explore query:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+https://api.foursquare.com/v2/venues/explore?&client_id={}
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+&client_secret={}&v={}&ll={},{}&radius=5000&limit=1000
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm} 
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+where the 
+\family typewriter
+client_id
+\family default
+, 
+\family typewriter
+client_secret
+\family default
+ and 
+\family typewriter
+v
+\family default
+ are credentials information, 
+\family typewriter
+ll
+\family default
+ is the latitude and longitude of neighbors.
+ I limited the search to up to 1000 venues within a 5 km radius of each
+ neighborhood.
+ We will need of the name, categories and distance from neighborhood coordinates
+ of each venue.
+ An example of this data is given in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:04"
+
+\end_inset
+
+.
+ This table is linked with the neighborhood table by the index 
+\family typewriter
+nb_index
+\family default
+.
+ The radius of 5km may be to large for some neighbors.
+ However, it is possible to select the best value of this parameter based
+ on the quality of the clustering.
+ This optimization procedure will be covered later.
+\end_layout
+
+\begin_layout Section
+Methodology
+\end_layout
+
+\begin_layout Standard
+In this point, we have two main tables, which is that of Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:02"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:04"
+
+\end_inset
+
+.
+ We can merge this datasets by the 
+\family typewriter
+nb_index
+\family default
+.
+ In fact, this is what will be done.
+ However, it is convenient to allow the user to choose only the venues within
+ a maximum radius determined by a parameter that we will call 
+\family typewriter
+max_distance
+\family default
+.
+ So, to make this process easier, lets define the following function
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename venue_table.png
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of venues on neighbourhood with index 
+\family typewriter
+nb_index
+\family default
+ = 0.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:04"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+def limit_venue_distance(X,max_distance):
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+return X[X['distance']<=max_distance] 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+After this, we have to aggregate the venue table by 
+\family typewriter
+nb_index
+\family default
+.
+ To do this, lets consider the function:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+def agg_venues_by_nb(X):
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\family typewriter
+concatenate_categories = lambda series: reduce(
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+lambda x, y: x +'|'+y, series)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\family typewriter
+return X.groupby('nb_index').agg({'categories': concatenate_categories})
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+The last step is the merge:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+def merge_categories(df, df_venues, max_distance=1000):
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+categories = agg_venues_by_nb(limit_venue_distance(
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+df_venues,max_distance=max_distance))
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+return pd.merge(
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+df,
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+categories,
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+how = 'inner',
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+left_on = 'index',
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+right_index = True,
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+).rename(columns={'index':'neighbourhood_id'}).set_index(
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+'neighbourhood_id')
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At this point, we have a table with a column containing all the categories
+ in a given neighborhood.
+ These categories can be repeated within a row since the aggregation function
+ concatenated the categories of all the neighborhood venues.
+ An example of this table can be seen in the Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:05"
+
+\end_inset
+
+.
+ The next step is count how many times each category appeared in total.
+ To do this, I defined the following function:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename categorias.png
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of categories in neighborhoods.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:05"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+def n_most_common_words(categories,n=None,n_min = 1,n_max = 9999999):
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+words_list = '|'.join(categories)
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+for char in ['/','&']:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+words_list = words_list.replace(char,'')
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+result = Counter(words_list.split('|'))
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+if n:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+result = dict(result.most_common(n))
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+else:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+result = dict(result.most_common())
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+return dict((filter(lambda x: (x[1]>=n_min) and (x[1]<=n_max),
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\end_inset
+
+result.items())))
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.25cm} 
+\backslash
+noindent 
+\end_layout
+
+\end_inset
+
+ The most common words are Shop appearing 8224 times, Gym with 6710, Place
+ with 5573, Store with 5267 and Bar with 4352.
+ I will consider only the words that appears more than a specified number
+ of times.
+ This number will be a new model parameter, called 
+\family typewriter
+n_min
+\family default
+, that I will optimize.
+\end_layout
+
+\begin_layout Standard
+Selecting the most significant words, lets count how many times each of
+ this categories appears in each row.
+ This value will be allocated in a new column with the category name.
+ After this, the dataframe will looks like the Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:06"
+
+\end_inset
+
+.
+ After this, I will try two diffenrent types of interpretation.
+ The first one is no scale the columns using the Min-Max approach.
+ The second one is to consider every number greater then 
+\family typewriter
+n_cats
+\family default
+ as 1 and 0 otherwise.
+ We need the optimization procedure to determine which is the best.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename array.png
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of count of categories in neighborhoods.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:06"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
