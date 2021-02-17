@@ -475,6 +475,10 @@ nb_index
 Methodology
 \end_layout
 
+\begin_layout Subsection
+Pre-Processing
+\end_layout
+
 \begin_layout Standard
 In this point, we have two main tables, which is that of Figures 
 \begin_inset CommandInset ref
@@ -1382,10 +1386,39 @@ reference "fig:06"
 \end_inset
 
 .
+ After this, I will try two different types of interpretation.
+ The first one is to scale the columns using the Min-Max approach.
+ The second one is to consider every number greater then 
+\family typewriter
+n_cats
+\family default
+ as 1 and 0 otherwise.
+ The parameter 
+\family typewriter
+n_cats
+\family default
+ is free and is something we have to found.
+ We need the optimization procedure to determine which is the best.
+ To proceed this pre processing step, I define a function called 
+\family typewriter
+categories_processing
+\family default
+ that can be accessed in the GitHub Repository related to this project 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "github"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1417,6 +1450,521 @@ name "fig:06"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Standard
+The clustering procedure we choose is the KMeans 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kmeans"
+literal "false"
+
+\end_inset
+
+.
+ We are not going to determine the number of clusters 
+\family typewriter
+k
+\family default
+ and the 
+\family typewriter
+algorithm
+\family default
+ now.
+ These parameters will be kept free and optimized together with others in
+ the same step.
+\end_layout
+
+\begin_layout Subsection
+Optimization
+\end_layout
+
+\begin_layout Standard
+We have to determine the parameters 
+\family typewriter
+max_distance,
+\family default
+ 
+\family typewriter
+n_min
+\family default
+, 
+\family typewriter
+n_cats
+\family default
+, 
+\family typewriter
+k
+\family default
+ and 
+\family typewriter
+algorithm
+\family default
+ before proceeding to the results.
+ This will be done using a Markov-Chain-Monte-Carlo approach as a stochastic
+ optimization procedure
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mcmc"
+literal "false"
+
+\end_inset
+
+.
+ The metric to be used here will be the Calinski Harabasz score 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "score"
+literal "false"
+
+\end_inset
+
+.
+ I will running a sample with 1000 iterations and get the optimal solution.
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Standard
+As commented before, the approach depends on parameters left free until
+ now.
+ To determine these parameters, I ran a MCMC sample with 1000 iterations
+ and get the following optimized solution:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Best Value
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+max_distance
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_min
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_cats
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+k
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This parameters configuration means that we are considering that we are
+ considering that a venue is part of a neighborhood if it is within a radius
+ of ???? meters from the coordinates of its coordinates.
+ Each neighborhood will be assigned a specific category if at least ????
+ of its venues have that category.
+ The optimization procedure select that the MinMax approach is better than
+ to consider every number greater then 
+\family typewriter
+n_cats
+\family default
+ as 1 and 0 otherwise.
+ So, 
+\family typewriter
+n_cats
+\family default
+ is meaningless in this context.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Best Value
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+max_distance
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_min
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_cats
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+k
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Table with the optimal solution values for parameters.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "github"
+literal "false"
+
+\end_inset
+
+E.
+ M.
+ de Morais.
+ GitHub Repository.
+ Applied Data Science Capstone.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Accessible in 
+\backslash
+href{https://github.com/emdemor/Coursera_Capstone}{https://github.com/emdemor/Cour
+sera
+\backslash
+_Capstone}.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kmeans"
+literal "false"
+
+\end_inset
+
+J.
+ MacQueen.
+ Some methods for classification and analysis of multivariate observations.
+ In 
+\emph on
+Proceedings of the fifth Berkeley symposium on mathematical statistics and
+ probability
+\emph default
+ (Vol.
+ 1, No.
+ 14, pp.
+ 281-297,1967).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mcmc"
+literal "false"
+
+\end_inset
+
+Andrieu, C., De Freitas, N., Doucet, A., & Jordan, M.
+ I.
+ (2003).
+ 
+\emph on
+An introduction to MCMC for machine learning.
+ Machine learning
+\emph default
+, 50(1), 5-43.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "score"
+literal "false"
+
+\end_inset
+
+Caliński, T.
+ and Harabasz, J.
+ (1974).
+ A dendrite method for cluster analysis, 
+\emph on
+Communications in Statistics-theory and Methods
+\emph default
+ 3(1): 1–27.
 \end_layout
 
 \end_body

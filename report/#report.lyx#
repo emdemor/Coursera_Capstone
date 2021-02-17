@@ -104,6 +104,12 @@
 Applied Data Science Capstone: Most Similar Neighborhood in Another City
 \end_layout
 
+\begin_layout Author
+E.
+ M.
+ de Morais
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -145,7 +151,7 @@ Problem
 \begin_layout Standard
 We have two of the largest cities in the world with very distinct characteristic
 s: São Paulo and Rio de Janeiro.
- Locally, each of this places acts like professional centers attracting
+ Locally, each of these places acts like professional centers attracting
  professionals and companies.
  Despite the differences mentioned, it is expected that several specific
  neighborhoods of these cities have characteristics in common.
@@ -165,7 +171,7 @@ Interest
 It is very common for people to have to move to another city.
  The reasons for this are quite diverse and can involve professional opportuniti
 es, personal reasons, among others.
- This process can be quite difficult for some people, as it involves adapting
+ This process can be difficult for some people, as it involves adapting
  to a new and possibly different environment.
  Although two cities may be completely different, they may have neighborhoods
  with similar characteristics in common.
@@ -173,13 +179,13 @@ es, personal reasons, among others.
  to live in a new city.
  Thus, a person can choose to move to a neighborhood in a new city with
  similar characteristics to the neighborhood in the city where he lives
- and is already acclimated.
+ in and is already acclimated.
 \end_layout
 
 \begin_layout Standard
-Sometimes, a company in one of this cities is interesting in a professional
+Sometimes, a company in one of these cities is interested in a professional
  that lives in the other city.
- Certainly, if the professional find a similar neighborhood, he will be
+ Certainly, if the professional finds a similar neighborhood, he will be
  more likely to accept an offer if it is professionally interesting.
 \end_layout
 
@@ -188,13 +194,13 @@ Data
 \end_layout
 
 \begin_layout Standard
-The name of all neighbourhoods of São Paulo and Rio de Janeiro are needed
+The name of all neighborhoods of São Paulo and Rio de Janeiro are needed
  to solve the problem.
  The data given at the site 
 \family typewriter
 www.guiamais.com.br
 \family default
- is used in order to fetch the necessary data.
+ is used.
  The respective URLs are:
 \end_layout
 
@@ -282,8 +288,8 @@ name "fig:01_map"
 \end_layout
 
 \begin_layout Standard
-As next step, we need to get the latitude and longitude of all neighbourhoods.
- It can be done using the Nominatim search API, from OpenStreetMaps [???].
+As the next step, we need to get the latitude and longitude of all neighborhoods.
+ It can be done using the Nominatim search API, from OpenStreetMaps.
  An example of data with coordinates can be see on Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -292,8 +298,7 @@ reference "fig:02"
 \end_inset
 
 .
- Its possible to see the neighbourhood positions in the maps pof Figure
- 
+ Its possible to see the neighborhood positions in the maps of Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:03"
@@ -383,7 +388,7 @@ name "fig:03"
 \end_layout
 
 \begin_layout Standard
-The coordinate data are then used for the foursquare API in order to get
+The coordinated data are then used for the foursquare API in order to get
  the venue data of all neighborhoods.
  For this, I used the explore query:
 \end_layout
@@ -450,7 +455,7 @@ ll
  is the latitude and longitude of neighbors.
  I limited the search to up to 1000 venues within a 5 km radius of each
  neighborhood.
- We will need of the name, categories and distance from neighborhood coordinates
+ We will need the name, categories and distance from neighborhood coordinates
  of each venue.
  An example of this data is given in Figure 
 \begin_inset CommandInset ref
@@ -473,6 +478,10 @@ nb_index
 
 \begin_layout Section
 Methodology
+\end_layout
+
+\begin_layout Subsection
+Pre-Processing
 \end_layout
 
 \begin_layout Standard
@@ -521,7 +530,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Example of venues on neighbourhood with index 
+Example of venues on neighborhood with index 
 \family typewriter
 nb_index
 \family default
@@ -1370,10 +1379,552 @@ n_min
 \end_layout
 
 \begin_layout Standard
-Selecting the most significant words, lets count how many times each of
- this categories appears in each row.
+Selecting the most significant words, let's count how many times each of
+ these categories appears in each row.
  This value will be allocated in a new column with the category name.
- After this, the 
+ After this, the dataframe will look like the Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:06"
+
+\end_inset
+
+.
+ After this, I will try two different types of interpretation.
+ The first one is to scale the columns using the Min-Max approach.
+ The second one is to consider every number greater then 
+\family typewriter
+n_cats
+\family default
+ as 1 and 0 otherwise.
+ The parameter 
+\family typewriter
+n_cats
+\family default
+ is free and is something we have to find.
+ We need the optimization procedure to determine which is the best.
+ To proceed this pre processing step, I define a function called 
+\family typewriter
+categories_processing
+\family default
+ that can be accessed in the GitHub Repository related to this project 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "github"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename array.png
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Example of count of categories in neighborhoods.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:06"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout Standard
+The clustering procedure we choose is the KMeans 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kmeans"
+literal "false"
+
+\end_inset
+
+.
+ We are not going to determine the number of clusters 
+\family typewriter
+k
+\family default
+ and the 
+\family typewriter
+algorithm
+\family default
+ now.
+ These parameters will be kept free and optimized together with others in
+ the same step.
+\end_layout
+
+\begin_layout Subsection
+Optimization
+\end_layout
+
+\begin_layout Standard
+We have to determine the parameters 
+\family typewriter
+max_distance,
+\family default
+ 
+\family typewriter
+n_min
+\family default
+, 
+\family typewriter
+n_cats
+\family default
+, 
+\family typewriter
+k
+\family default
+ and 
+\family typewriter
+algorithm
+\family default
+ before proceeding to the results.
+ This will be done using a Markov-Chain-Monte-Carlo approach as a stochastic
+ optimization procedure
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mcmc"
+literal "false"
+
+\end_inset
+
+.
+ The metric to be used here will be the Calinski Harabasz score 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "score"
+literal "false"
+
+\end_inset
+
+.
+ I will run a sample with 1000 iterations and get the optimal solution.
+\end_layout
+
+\begin_layout Section
+Results and Discussion
+\end_layout
+
+\begin_layout Standard
+As commented before, the approach depends on parameters left free until
+ now.
+ To determine these parameters, I ran a MCMC sample with 1000 iterations
+ and got the following optimized solution:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Best Value
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+max_distance
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4892
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_min
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+69
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+n_cats
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+k
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+full
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This parameters configuration means that we are considering that a venue
+ is part of a neighborhood if it is within a radius of 4892 meters from
+ its coordinates.
+ The categories will be chosen if it appears at least 69 times through the
+ venues.
+ The optimization procedure select that the MinMax scaling approach is better
+ than to consider every number greater then 
+\family typewriter
+n_cats
+\family default
+ as 1 and 0 otherwise.
+ So, 
+\family typewriter
+n_cats
+\family default
+ is meaningless in this context.
+ The optimal configuration for KMeans clustering is with 3 clusters, using
+ the algorithm 
+\family typewriter
+full
+\family default
+.
+ We can see the distribution of neighborhood with its respective labels
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:07"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename rj_sp_cluster.png
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clustering approach in neighborhoods.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:07"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The most common words in each cluster can be seen in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:08"
+
+\end_inset
+
+.
+ We can see that a lot of words are appearing in all clusters.
+ The reason for this is that both cities have a very strong urban profile.
+ So, it is natural that venues that meet basic needs are recurrent.
+ We can see that in cluster 0, we have categories as Beach, Park, Hotel
+ Cultural Center and etc, showing us that this cluster is more associated
+ with places with more leisure options.
+ The cluster 1, we can see categories as Fast_Food_Restaurant, Burguer_Joint,
+ Food_Truck and etc.
+ This means that in these places people tend to look for places for fast
+ food.
+ This may be an indication that these are places aimed at professional or
+ corporate environments.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename most_common.png
+	width 75text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Most common words in each cluster.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:08"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+It was possible to cluster the neighborhoods of both cities and determine
+ three types of clusters.
+ Maps showing the geographical distribution of these clusters have been
+ generated, and indicate a relationship between the central regions of these
+ cities, leisure regions and suburban regions.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "github"
+literal "false"
+
+\end_inset
+
+E.
+ M.
+ de Morais.
+ GitHub Repository.
+ Applied Data Science Capstone.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Accessible in 
+\backslash
+href{https://github.com/emdemor/Coursera_Capstone}{https://github.com/emdemor/Cour
+sera
+\backslash
+_Capstone}.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kmeans"
+literal "false"
+
+\end_inset
+
+J.
+ MacQueen.
+ Some methods for classification and analysis of multivariate observations.
+ In 
+\emph on
+Proceedings of the fifth Berkeley symposium on mathematical statistics and
+ probability
+\emph default
+ (Vol.
+ 1, No.
+ 14, pp.
+ 281-297,1967).
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mcmc"
+literal "false"
+
+\end_inset
+
+Andrieu, C., De Freitas, N., Doucet, A., & Jordan, M.
+ I.
+ (2003).
+ 
+\emph on
+An introduction to MCMC for machine learning.
+ Machine learning
+\emph default
+, 50(1), 5-43.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "score"
+literal "false"
+
+\end_inset
+
+Caliński, T.
+ and Harabasz, J.
+ (1974).
+ A dendrite method for cluster analysis, 
+\emph on
+Communications in Statistics-theory and Methods
+\emph default
+ 3(1): 1–27.
 \end_layout
 
 \end_body
